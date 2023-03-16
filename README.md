@@ -5,6 +5,40 @@ This project is a sample web application built using React and React Router. It 
 ## App.js
 - This code sets up the client-side routing for a React application using the "react-router-dom" package. It defines a router using the "createBrowserRouter" function and sets up routes using the "createRoutesFromElements" function, which takes a tree of React elements and converts them into an array of routes.
 
+### structure of App.js
+```jsx
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route path='/' element={<RootLayout />}>
+      <Route index element={<Home />} />
+      <Route path='about' element={<About />} />
+      <Route path='help' element={<HelpLayout />}>
+        <Route path='faq' element={<Faq />} />
+        <Route path='contact' element={<Contact />} action={contactAction} />
+      </Route>
+      <Route path="careers" element={<CareersLayout />} errorElement={<CareersError />}>
+        <Route
+          index
+          element={<Careers />}
+          loader={careersLoader}
+          errorElement={<CareersError />}
+        />
+        <Route
+          path=':id'
+          element={<CareerDetails />}
+          loader={careerDetailsLoader}
+        />
+      </Route>
+      <Route path='*' element={<NotFound />} />
+    </Route>
+  ))
+
+function App() {
+  return (
+    < RouterProvider router={router} />
+  );
+}
+```
 The routes include:
 
 - A route for the home page ("/") that uses a "RootLayout" component and displays a "Home" component as its index page.
